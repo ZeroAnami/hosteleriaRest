@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig" ddlActionDbType="oracle">
+    <option name="defaultUnitInitialized" value="true" />
+    <option name="renamerInitialized" value="true" />
+    <option name="sourceModelValue" value="Default" />
+    <option name="reverseEngineeringLastDbConnectionId" value="9c1b8c15-f1f4-47ad-9563-cf009cf54d6b" />
+    <option name="reLastEntityCreationPackage" value="src/main/java/com/toni/model" />
+  </component>
+</project>
