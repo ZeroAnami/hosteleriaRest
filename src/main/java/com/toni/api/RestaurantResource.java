@@ -4,8 +4,9 @@ import com.toni.base.DAOException;
 import com.toni.base.JacksonJsonConverter;
 import com.toni.base.ResponseRest;
 import com.toni.base.StatusRest;
-import com.toni.model.Product;
+import com.toni.model.Restaurant;
 import com.toni.service.ProductService;
+import com.toni.service.RestaurantService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -16,20 +17,20 @@ import org.apache.commons.logging.LogFactory;
 import java.io.IOException;
 import java.util.List;
 
-@Path("/products")
-public class ProductResource {
+@Path("/restaurants")
+public class RestaurantResource {
 
 
-    private static final Log LOGGER = LogFactory.getLog(ProductResource.class);
+    private static final Log LOGGER = LogFactory.getLog(RestaurantResource.class);
 
     @Inject
-    private ProductService service;
+    private RestaurantService service;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProducts()  {
         try {
-            List<Product> list = service.findAll();
+            List<Restaurant> list = service.findAll();
             String response = JacksonJsonConverter.getInstance().toJson(list);
             return Response.status(StatusRest.STATUS_OK).entity(new ResponseRest(StatusRest.STATUS_OK, response, "Correcto")).build();
         } catch (DAOException ex) {
@@ -46,7 +47,7 @@ public class ProductResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProduct(@QueryParam("id") Integer id){
         try {
-            Product p = service.getById(id);
+            Restaurant p = service.getById(id);
             String response = JacksonJsonConverter.getInstance().toJson(p);
             return Response.status(StatusRest.STATUS_OK).entity(new ResponseRest(StatusRest.STATUS_OK, response, "Correcto")).build();
         } catch (DAOException e) {
@@ -61,10 +62,10 @@ public class ProductResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createProduct(Product product){
+    public Response createProduct(Restaurant restaurant){
         try {
-            service.guardar(product);
-            String response = JacksonJsonConverter.getInstance().toJson(product);
+            service.guardar(restaurant);
+            String response = JacksonJsonConverter.getInstance().toJson(restaurant);
             ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK, response, "Producto guardardo correctamente");
             return Response.status(StatusRest.STATUS_OK).entity(mensaje).build();
         } catch (Exception e) {
@@ -74,15 +75,14 @@ public class ProductResource {
         }
     }
 
-    @Path("/{id}")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateProduct(@PathParam("id") Integer id, Product product){
+    public Response updateProduct(@QueryParam("id") Integer id, Restaurant restaurant){
         try {
             if(service.getById(id) != null){
-                product.setId(id);
-                Product p = service.modificar(product);
+                restaurant.setId(id);
+                Restaurant p = service.modificar(restaurant);
                 String response = JacksonJsonConverter.getInstance().toJson(p);
                 ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK, response, "Producto actualizado correctamente");
                 return Response.ok().status(Response.Status.OK).entity(mensaje).build();
@@ -101,9 +101,9 @@ public class ProductResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteProduct(@PathParam("id") Integer id){
         try {
-            Product product = service.getById(id);
-            if(product != null){
-                service.eliminar(product);
+            Restaurant restaurant = service.getById(id);
+            if(restaurant != null){
+                service.eliminar(restaurant);
                 ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK_VACIO, "Producto borrado correctamente", "Producto borrado correctamente");
                 return Response.ok().status(StatusRest.STATUS_OK_VACIO).entity(mensaje).build();
             } else {

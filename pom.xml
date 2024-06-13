@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.toni</groupId>
-    <artifactId>restTFG_9_1</artifactId>
+    <artifactId>restTFG</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>restTFG_9_1</name>
+    <name>restTFG</name>
     <packaging>war</packaging>
 
     <properties>

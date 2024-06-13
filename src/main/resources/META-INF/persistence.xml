@@ -7,7 +7,13 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <jta-data-source>java:jboss/datasources/OracleDS</jta-data-source>
         <class>com.toni.model.Product</class>
-        <class>com.toni.model.Cliente</class>
+        <class>com.toni.model.Restaurant</class>
+        <class>com.toni.model.Categoria</class>
+        <class>com.toni.model.Conexion</class>
+        <class>com.toni.model.Etiqueta</class>
+        <class>com.toni.model.Order</class>
+        <class>com.toni.model.OrderItem</class>
+        <class>com.toni.model.User</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
