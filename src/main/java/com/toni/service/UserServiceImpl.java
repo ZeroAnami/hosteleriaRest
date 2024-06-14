@@ -2,7 +2,7 @@ package com.toni.service;
 
 import com.toni.base.ServicioDAORestImpl;
 import com.toni.model.Conexion;
-import com.toni.model.Restaurant;
+import com.toni.model.User;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
@@ -10,9 +10,9 @@ import jakarta.transaction.Transactional;
 @Named
 @Dependent
 @Transactional
-public class ConexionServiceImpl extends ServicioDAORestImpl<Conexion> implements ConexionService {
+public class UserServiceImpl extends ServicioDAORestImpl<User> implements UserService {
 
-    public ConexionServiceImpl(){
+    public UserServiceImpl(){
 
     }
 

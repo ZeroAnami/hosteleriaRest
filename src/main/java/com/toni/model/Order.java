@@ -14,7 +14,7 @@ public class Order implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator=ConstantesAplicacion.SCHEMA_MAIN + "_ORDERS_SEQ")
-    @Column(name = "ID_ORDER")
+    @Column(name = "ID")
     private Integer id;
 
     @Column(name = "ID_CONEXION")

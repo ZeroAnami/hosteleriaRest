@@ -28,7 +28,7 @@ public class RestaurantResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getProducts()  {
+    public Response getItems()  {
         try {
             List<Restaurant> list = service.findAll();
             String response = JacksonJsonConverter.getInstance().toJson(list);
@@ -45,9 +45,10 @@ public class RestaurantResource {
     @Path("/getById")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getProduct(@QueryParam("id") Integer id){
+    public Response createItem(@QueryParam("id") Integer id){
         try {
             Restaurant p = service.getById(id);
+            if(p == null) throw new DAOException("Restaurante no encontrado id "+id);
             String response = JacksonJsonConverter.getInstance().toJson(p);
             return Response.status(StatusRest.STATUS_OK).entity(new ResponseRest(StatusRest.STATUS_OK, response, "Correcto")).build();
         } catch (DAOException e) {
@@ -62,7 +63,7 @@ public class RestaurantResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createProduct(Restaurant restaurant){
+    public Response createItem(Restaurant restaurant){
         try {
             service.guardar(restaurant);
             String response = JacksonJsonConverter.getInstance().toJson(restaurant);
@@ -78,7 +79,7 @@ public class RestaurantResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateProduct(@QueryParam("id") Integer id, Restaurant restaurant){
+    public Response updateItem(@QueryParam("id") Integer id, Restaurant restaurant){
         try {
             if(service.getById(id) != null){
                 restaurant.setId(id);
@@ -87,7 +88,7 @@ public class RestaurantResource {
                 ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK, response, "Producto actualizado correctamente");
                 return Response.ok().status(Response.Status.OK).entity(mensaje).build();
             } else {
-                ResponseRest mensajeError = new ResponseRest(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO, "El producto no existe", "El producto no existe");
+                ResponseRest mensajeError = new ResponseRest(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO, "El restaurante no existe", "El producto no existe");
                 return Response.ok().status(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO).entity(mensajeError).build();
             }
         } catch (Exception e) {
@@ -96,10 +97,9 @@ public class RestaurantResource {
         return Response.status(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO).entity(new ResponseRest(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO, "Error", "")).build();
     }
 
-    @Path("/{id}")
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteProduct(@PathParam("id") Integer id){
+    public Response deleteItem(@QueryParam("id") Integer id){
         try {
             Restaurant restaurant = service.getById(id);
             if(restaurant != null){
@@ -107,7 +107,7 @@ public class RestaurantResource {
                 ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK_VACIO, "Producto borrado correctamente", "Producto borrado correctamente");
                 return Response.ok().status(StatusRest.STATUS_OK_VACIO).entity(mensaje).build();
             } else {
-                ResponseRest mensajeError = new ResponseRest(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO, "El producto no existe", "El producto no existe");
+                ResponseRest mensajeError = new ResponseRest(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO, "El restaurante no existe", "El restaurante no existe");
                 return Response.ok().status(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO).entity(mensajeError).build();
             }
         } catch (DAOException e) {

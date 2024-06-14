@@ -24,6 +24,7 @@ public class Conexion implements Serializable {
 
     @Column(name = "ID_RESTAURANTE")
     private Integer idRestaurante;
+
     @OneToMany
     @JoinColumn(name = "ID_CONEXION", referencedColumnName = "ID_CONEXION")
     private List<Order> pedidosList;
@@ -34,6 +35,9 @@ public class Conexion implements Serializable {
 
     @Column(name = "ESTADO")
     private Integer estado;
+
+    @Column(name = "MESA")
+    private Integer mesa;
 
     public Conexion() {
     }
@@ -81,6 +85,14 @@ public class Conexion implements Serializable {
         return estado;
     }
 
+    public Integer getMesa() {
+        return mesa;
+    }
+
+    public void setMesa(Integer mesa) {
+        this.mesa = mesa;
+    }
+
     public void setEstado(Integer estado) {
         this.estado = estado;
     }
@@ -110,6 +122,7 @@ public class Conexion implements Serializable {
                 ", pedidosList=" + pedidosList +
                 ", userList=" + userList +
                 ", estado=" + estado +
+                ", mesa=" + mesa +
                 '}';
     }
 }

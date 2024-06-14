@@ -12,18 +12,18 @@ import java.util.Objects;
         schema = ConstantesAplicacion.SCHEMA_MAIN,
         name = "ORDER_ITEMS"
 )
-@SequenceGenerator(name = ConstantesAplicacion.SCHEMA_MAIN + "_ORDER_ITEMS_SEQ", sequenceName = ConstantesAplicacion.SCHEMA_MAIN + ".ORDER_ITEMS_SEQ", allocationSize = 1)
+@SequenceGenerator(name = ConstantesAplicacion.SCHEMA_MAIN + "_ORDER_ITEMS_SEQ", sequenceName = ConstantesAplicacion.SCHEMA_MAIN + ".ORDERS_ITEM_SEQ1", allocationSize = 1)
 public class OrderItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator=ConstantesAplicacion.SCHEMA_MAIN + "_ORDER_ITEMS_SEQ")
-    @Column(name = "ID_ORDEN_ITEM")
+    @Column(name = "ID")
     private Integer id;
 
     @Column(name = "ID_ORDER")
     private Integer idOrder;
 
-    @Column(name = "PRODUCTO")
+    @Column(name = "ID_PRODUCTO")
     private Integer producto;
 
     @Column(name = "CANTIDAD")
@@ -33,7 +33,7 @@ public class OrderItem implements Serializable {
     @CollectionTable(
             schema = ConstantesAplicacion.SCHEMA_MAIN,
             name = "ORDER_ITEMS_USERS",
-            joinColumns = @JoinColumn(name = "ID_ORDEN_ITEM")
+            joinColumns = @JoinColumn(name = "ID")
     )
     @Column(name = "ID_USUARIO")
     private List<Integer> users;
