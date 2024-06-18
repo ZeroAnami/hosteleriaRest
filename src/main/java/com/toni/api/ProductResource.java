@@ -19,7 +19,6 @@ import java.util.List;
 @Path("/products")
 public class ProductResource {
 
-
     private static final Log LOGGER = LogFactory.getLog(ProductResource.class);
 
     @Inject
@@ -78,10 +77,10 @@ public class ProductResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateItem(@QueryParam("id") Integer id, Product product){
+    public Response updateItem(Product product){
         try {
-            if(service.getById(id) != null){
-                product.setId(id);
+            if(service.getById(product.getId()) != null){
+                product.setId(product.getId());
                 Product p = service.modificar(product);
                 String response = JacksonJsonConverter.getInstance().toJson(p);
                 ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK, response, "Producto actualizado correctamente");

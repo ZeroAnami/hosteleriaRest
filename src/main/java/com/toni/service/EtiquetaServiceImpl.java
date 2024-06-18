@@ -1,8 +1,7 @@
 package com.toni.service;
 
 import com.toni.base.ServicioDAORestImpl;
-import com.toni.model.Categoria;
-import com.toni.model.User;
+import com.toni.model.Etiqueta;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
@@ -10,9 +9,9 @@ import jakarta.transaction.Transactional;
 @Named
 @Dependent
 @Transactional
-public class CategoriaServiceImpl extends ServicioDAORestImpl<Categoria> implements CategoriaService {
+public class EtiquetaServiceImpl extends ServicioDAORestImpl<Etiqueta> implements EtiquetaService {
 
-    public CategoriaServiceImpl(){
+    public EtiquetaServiceImpl(){
 
     }
 

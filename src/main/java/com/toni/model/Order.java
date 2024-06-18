@@ -21,7 +21,7 @@ public class Order implements Serializable {
     private Integer idConexion;
 
     @OneToMany
-    @JoinColumn(name = "ID_ORDER", referencedColumnName = "ID_ORDER")
+    @JoinColumn(name = "ID_ORDER", referencedColumnName = "ID")
     private List<OrderItem> orderItemList;
 
     public Order() {

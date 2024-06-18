@@ -8,9 +8,11 @@ import java.util.Objects;
 
 @Entity
 @Table(schema = ConstantesAplicacion.SCHEMA_MAIN, name = "USUARIOS")
+@SequenceGenerator(name = ConstantesAplicacion.SCHEMA_MAIN + "_USUARIOS_SEQ", sequenceName = ConstantesAplicacion.SCHEMA_MAIN + ".USUARIOS_SEQ", allocationSize = 1)
 public class User implements Serializable {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator=ConstantesAplicacion.SCHEMA_MAIN + "_USUARIOS_SEQ")
     @Column(name = "ID_USUARIO")
     private Integer id;
 

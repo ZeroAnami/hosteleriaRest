@@ -20,7 +20,6 @@ import java.util.List;
 @Path("/users")
 public class UserResource {
 
-
     private static final Log LOGGER = LogFactory.getLog(UserResource.class);
 
     @Inject
@@ -70,7 +69,7 @@ public class UserResource {
             ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK_REGISTRO_CREADO, response, "Usuario guardardo correctamente");
             return Response.status(StatusRest.STATUS_OK_REGISTRO_CREADO).entity(mensaje).build();
         } catch (Exception e) {
-            LOGGER.error("Error al guardar los productos", e);
+            LOGGER.error("Error al guardar los usuarios", e);
             ResponseRest mensajeError = new ResponseRest(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO, "Error al guardar los usuarios", e.getMessage());
             return Response.status(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO).entity(mensajeError).build();
         }
@@ -87,7 +86,7 @@ public class UserResource {
                 ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK, response, "Usuario actualizado correctamente");
                 return Response.ok().status(Response.Status.OK).entity(mensaje).build();
             } else {
-                ResponseRest mensajeError = new ResponseRest(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO, "La usuario no existe", "La user no existe");
+                ResponseRest mensajeError = new ResponseRest(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO, "El usuario no existe", "El usuario no existe");
                 return Response.ok().status(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO).entity(mensajeError).build();
             }
         } catch (Exception e) {

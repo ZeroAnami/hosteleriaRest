@@ -19,7 +19,6 @@ import java.util.List;
 @Path("/conexion")
 public class ConexionResource {
 
-
     private static final Log LOGGER = LogFactory.getLog(ConexionResource.class);
 
     @Inject
@@ -76,6 +75,28 @@ public class ConexionResource {
         }
     }
 
+    @Path("/finalizarPedido")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response finalizarConexion(@QueryParam("id") Integer id){
+        try {
+            Conexion conexion = service.getById(id);
+            if(conexion != null){
+                conexion.setEstado(1);
+                Conexion p = service.modificar(conexion);
+                String response = JacksonJsonConverter.getInstance().toJson(p);
+                ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK, response, "Conexion actualizada correctamente");
+                return Response.ok().status(Response.Status.OK).entity(mensaje).build();
+            } else {
+                ResponseRest mensajeError = new ResponseRest(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO, "La conexion no existe", "La conexion no existe");
+                return Response.ok().status(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO).entity(mensajeError).build();
+            }
+        } catch (Exception e) {
+            LOGGER.error(e);
+        }
+        return Response.status(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO).entity(new ResponseRest(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO, "Error", "")).build();
+    }
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -85,7 +106,7 @@ public class ConexionResource {
                 conexion.setId(id);
                 Conexion p = service.modificar(conexion);
                 String response = JacksonJsonConverter.getInstance().toJson(p);
-                ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK, response, "Producto actualizado correctamente");
+                ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK, response, "Conexion actualizada correctamente");
                 return Response.ok().status(Response.Status.OK).entity(mensaje).build();
             } else {
                 ResponseRest mensajeError = new ResponseRest(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO, "La conexion no existe", "La conexion no existe");

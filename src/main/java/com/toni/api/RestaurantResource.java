@@ -20,7 +20,6 @@ import java.util.List;
 @Path("/restaurants")
 public class RestaurantResource {
 
-
     private static final Log LOGGER = LogFactory.getLog(RestaurantResource.class);
 
     @Inject

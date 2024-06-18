@@ -4,9 +4,8 @@ import com.toni.base.DAOException;
 import com.toni.base.JacksonJsonConverter;
 import com.toni.base.ResponseRest;
 import com.toni.base.StatusRest;
-import com.toni.model.Order;
-import com.toni.service.ConexionService;
-import com.toni.service.OrderService;
+import com.toni.model.OrderItem;
+import com.toni.service.OrderItemService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -17,19 +16,19 @@ import org.apache.commons.logging.LogFactory;
 import java.io.IOException;
 import java.util.List;
 
-@Path("/order")
-public class OrderResource {
+@Path("/ordersItem")
+public class OrderItemResource {
 
-    private static final Log LOGGER = LogFactory.getLog(OrderResource.class);
+    private static final Log LOGGER = LogFactory.getLog(OrderItemResource.class);
 
     @Inject
-    private OrderService service;
+    private OrderItemService service;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getItems()  {
         try {
-            List<Order> list = service.findAll();
+            List<OrderItem> list = service.findAll();
             String response = JacksonJsonConverter.getInstance().toJson(list);
             return Response.status(StatusRest.STATUS_OK).entity(new ResponseRest(StatusRest.STATUS_OK, response, "Correcto")).build();
         } catch (DAOException ex) {
@@ -46,8 +45,8 @@ public class OrderResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getItemById(@QueryParam("id") Integer id){
         try {
-            Order p = service.getById(id);
-            if(p == null) throw new DAOException("Order no encontrado id "+id);
+            OrderItem p = service.getById(id);
+            if(p == null) throw new DAOException("OrderItem no encontrado id "+id);
             String response = JacksonJsonConverter.getInstance().toJson(p);
             return Response.status(StatusRest.STATUS_OK).entity(new ResponseRest(StatusRest.STATUS_OK, response, "Correcto")).build();
         } catch (DAOException e) {
@@ -62,11 +61,11 @@ public class OrderResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createItem(Order order){
+    public Response createItem(OrderItem orderItem){
         try {
-            service.guardar(order);
-            String response = JacksonJsonConverter.getInstance().toJson(order);
-            ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK_REGISTRO_CREADO, response, "Order guardarda correctamente");
+            service.guardar(orderItem);
+            String response = JacksonJsonConverter.getInstance().toJson(orderItem);
+            ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK_REGISTRO_CREADO, response, "OrderItem guardarda correctamente");
             return Response.status(StatusRest.STATUS_OK_REGISTRO_CREADO).entity(mensaje).build();
         } catch (Exception e) {
             LOGGER.error("Error al guardar los productos", e);
@@ -78,16 +77,16 @@ public class OrderResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateItem(@QueryParam("id") Integer id, Order order){
+    public Response updateItem(@QueryParam("id") Integer id, OrderItem orderItem){
         try {
             if(service.getById(id) != null){
-                order.setId(id);
-                Order p = service.modificar(order);
+                orderItem.setId(id);
+                OrderItem p = service.modificar(orderItem);
                 String response = JacksonJsonConverter.getInstance().toJson(p);
-                ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK, response, "Order actualizado correctamente");
+                ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK, response, "OrderItem actualizado correctamente");
                 return Response.ok().status(Response.Status.OK).entity(mensaje).build();
             } else {
-                ResponseRest mensajeError = new ResponseRest(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO, "La order no existe", "La order no existe");
+                ResponseRest mensajeError = new ResponseRest(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO, "La orderItem no existe", "La orderItem no existe");
                 return Response.ok().status(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO).entity(mensajeError).build();
             }
         } catch (Exception e) {
@@ -100,13 +99,13 @@ public class OrderResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteItem(@QueryParam("id") Integer id){
         try {
-            Order order = service.getById(id);
-            if(order != null){
-                service.eliminar(order);
-                ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK_VACIO, "Order borrado correctamente", "Order borrado correctamente");
+            OrderItem orderItem = service.getById(id);
+            if(orderItem != null){
+                service.eliminar(orderItem);
+                ResponseRest mensaje = new ResponseRest(StatusRest.STATUS_OK_VACIO, "OrderItem borrado correctamente", "OrderItem borrado correctamente");
                 return Response.ok().status(StatusRest.STATUS_OK_VACIO).entity(mensaje).build();
             } else {
-                ResponseRest mensajeError = new ResponseRest(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO, "Order no existe", "Order no existe");
+                ResponseRest mensajeError = new ResponseRest(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO, "OrderItem no existe", "OrderItem no existe");
                 return Response.ok().status(StatusRest.STATUS_ERROR_CLIENTE_RECURSO_NO_ENCONTRADO).entity(mensajeError).build();
             }
         } catch (DAOException e) {

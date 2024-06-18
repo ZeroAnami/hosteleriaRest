@@ -2,8 +2,8 @@ package com.toni.service;
 
 import com.toni.base.ServicioDAORest;
 import com.toni.model.Order;
-import com.toni.model.User;
+import com.toni.model.OrderItem;
 
-public interface OrderService extends ServicioDAORest<Order> {
+public interface OrderItemService extends ServicioDAORest<OrderItem> {
 
 }
